@@ -1,15 +1,23 @@
 package com.Adzer.Green.Soloution.job;
 
-public class Jobs {
+import jakarta.persistence.*;
 
-    private int jobId;
+@Entity
+@Table(name = "job_table")
+public class Jobs {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long jobId;
     private String jobTitle;
     private String jobDescription;
     private int maxSalary;
     private int minSalary;
     private String location;
 
-    public Jobs(int jobId, String jobTitle, String jobDescription, int maxSalary, int minSalary, String location) {
+    public Jobs() {
+    }
+
+    public Jobs(Long jobId, String jobTitle, String jobDescription, int maxSalary, int minSalary, String location) {
         this.jobId = jobId;
         this.jobTitle = jobTitle;
         this.jobDescription = jobDescription;
@@ -18,11 +26,11 @@ public class Jobs {
         this.location = location;
     }
 
-    public int getJobId() {
+    public Long getJobId() {
         return jobId;
     }
 
-    public void setJobId(int jobId) {
+    public void setJobId(Long jobId) {
         this.jobId = jobId;
     }
 

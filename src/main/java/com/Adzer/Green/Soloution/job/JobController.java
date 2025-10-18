@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/jobs")
 public class JobController {
     private final JobService jobService;
 
@@ -18,7 +18,7 @@ public class JobController {
     }
 
 
-    @GetMapping("/jobs")
+    @GetMapping
     public ResponseEntity<List<Jobs>> getAllJobs() {
         List<Jobs> jobs = jobService.getAllJobs();
         if (jobs.isEmpty()) {
@@ -28,15 +28,14 @@ public class JobController {
     }
 
 
-    @PostMapping("/jobs")
+    @PostMapping
     public ResponseEntity<String> addJob(@RequestBody Jobs job) {
         jobService.addJob(job);
         return new ResponseEntity<>("Job added successfully with ID: " + job.getJobId(), HttpStatus.CREATED);
     }
 
-
-    @GetMapping("/job")
-    public ResponseEntity<Jobs> getJobById(@RequestParam int id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Jobs> getJobById(@PathVariable int id) {
         Jobs job = jobService.getJobById(id);
         if (job == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -44,18 +43,21 @@ public class JobController {
         return new ResponseEntity<>(job, HttpStatus.OK);
     }
 
-    @DeleteMapping("/job")
-    public ResponseEntity<String> deleteJob(@RequestParam int id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteJob(@PathVariable int id) {
         boolean deleted = jobService.deleteJobById(id);
-        if (!deleted) return new ResponseEntity<>("Job not found", HttpStatus.NOT_FOUND);
+        if (!deleted) {
+            return new ResponseEntity<>("Job not found", HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>("Job deleted successfully", HttpStatus.OK);
     }
 
-
-    @PutMapping("/job")
-    public ResponseEntity<?> updateJob(@RequestParam int id, @RequestBody Jobs updatedJob) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateJob(@PathVariable int id, @RequestBody Jobs updatedJob) {
         Jobs job = jobService.updateJob(id, updatedJob);
-        if (job == null) return new ResponseEntity<>("Job not found", HttpStatus.NOT_FOUND);
+        if (job == null) {
+            return new ResponseEntity<>("Job not found", HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(job, HttpStatus.OK);
     }
 }
