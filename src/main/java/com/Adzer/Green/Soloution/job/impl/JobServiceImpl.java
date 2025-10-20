@@ -3,8 +3,6 @@ package com.Adzer.Green.Soloution.job.impl;
 import com.Adzer.Green.Soloution.job.JobRepository;
 import com.Adzer.Green.Soloution.job.Jobs;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
